@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Scientific Calculator</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Welcome Message -->
+  <div id="welcome-box">
+    <h2>Welcome to my calculator</h2>
+    <p>Created by <strong>Ayan Mahapatra</strong></p>
+  </div>
+
+  <!-- Calculator -->
+  <div class="calculator">
+    <div class="screen">
+      <div id="history"></div>
+      <input type="text" id="display" readonly>
+    </div>
+
+    <!-- Mode Toggle -->
+    <div class="mode-toggle">
+      <label><input type="checkbox" id="modeSwitch" onchange="toggleMode()"> RAD</label>
+    </div>
+
+    <div class="buttons">
+      <button onclick="clearDisplay()" class="function">AC</button>
+      <button onclick="deleteChar()" class="function">DEL</button>
+      <button onclick="appendValue('(')">(</button>
+      <button onclick="appendValue(')')">)</button>
+
+      <button onclick="appendValue('sin(')">sin</button>
+      <button onclick="appendValue('cos(')">cos</button>
+      <button onclick="appendValue('tan(')">tan</button>
+      <button onclick="appendValue('/')">&#247;</button>
+
+      <button onclick="appendValue('log(')">log</button>
+      <button onclick="appendValue('ln(')">ln</button>
+      <button onclick="appendValue('√(')">√</button>
+      <button onclick="appendValue('*')">&#215;</button>
+
+      <button onclick="appendValue('7')">7</button>
+      <button onclick="appendValue('8')">8</button>
+      <button onclick="appendValue('9')">9</button>
+      <button onclick="appendValue('-')">−</button>
+
+      <button onclick="appendValue('4')">4</button>
+      <button onclick="appendValue('5')">5</button>
+      <button onclick="appendValue('6')">6</button>
+      <button onclick="appendValue('+')">+</button>
+
+      <button onclick="appendValue('1')">1</button>
+      <button onclick="appendValue('2')">2</button>
+      <button onclick="appendValue('3')">3</button>
+      <button onclick="appendValue('^')">x^y</button>
+
+      <button onclick="appendValue('0')">0</button>
+      <button onclick="appendValue('.')">.</button>
+      <button onclick="appendValue('Ans')">Ans</button>
+      <button onclick="calculate()" class="equal">=</button>
+    </div>
+  </div>
+
+  <style>
+    body {
+      background: #b9d1da;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+    }
+
+    .calculator {
+      background: #2f2f2f;
+      border-radius: 15px;
+      padding: 20px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+      width: 300px;
+      z-index: 1;
+    }
+
+    .screen {
+      background: #e6e6e6;
+      padding: 10px;
+      border-radius: 5px;
+      margin-bottom: 10px;
+      box-shadow: inset 0 0 5px #ccc;
+    }
+
+    #history {
+      height: 20px;
+      font-size: 14px;
+      color: #555;
+      text-align: right;
+    }
+
+    #display {
+      width: 100%;
+      height: 40px;
+      font-size: 20px;
+      border: none;
+      background: transparent;
+      text-align: right;
+      color: #000;
+    }
+
+    .buttons {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+    }
+
+    button {
+      height: 50px;
+      font-size: 16px;
+      border: none;
+      border-radius: 8px;
+      background: #444;
+      color: white;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    button:hover {
+      background: #666;
+    }
+
+    .function {
+      background: #ff7b00;
+    }
+
+    .equal {
+      background: #00b894;
+    }
+
+    #welcome-box {
+      position: absolute;
+      top: 40px;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: #1abc9c;
+      color: white;
+      padding: 20px 30px;
+      border-radius: 12px;
+      text-align: center;
+      font-size: 18px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+      opacity: 1;
+      animation: fadeOut 10s ease-in-out 1 forwards;
+      z-index: 999;
+    }
+
+    @keyframes fadeOut {
+      0% { opacity: 1; top: 40px; }
+      80% { opacity: 1; }
+      100% { opacity: 0; top: 0px; }
+    }
+
+    .mode-toggle {
+      text-align: right;
+      margin-bottom: 10px;
+      font-size: 14px;
+      color: #fff;
+    }
+
+    button:focus {
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(26, 188, 156, 0.5);
+    }
+
+    @media (max-width: 600px) {
+  .calculator {
+    width: 95%;
+    padding: 10px;
+    transform: scale(1.0);
+    transform-origin: top center;
+  }
+
+  button {
+    font-size: 16px;
+    height: 48px;
+  }
+
+  #display {
+    font-size: 20px;
+    height: 40px;
+  }
+
+  .mode-toggle {
+    font-size: 14px;
+    margin-top: 6px;
+  }
+
+  #welcome-box {
+    font-size: 18px;
+    padding: 18px;
+  }
+}
+
+  button {
+    font-size: 18px;
+    height: 55px;
+  }
+
+  #display {
+    font-size: 22px;
+    height: 45px;
+  }
+
+  .mode-toggle {
+    font-size: 16px;
+    margin-top: 8px;
+  }
+
+  #welcome-box {
+    font-size: 20px;
+    padding: 22px;
+  }
+}
+
+      button {
+        font-size: 20px;
+        height: 65px;
+      }
+
+      #display {
+        font-size: 26px;
+        height: 50px;
+      }
+
+      .mode-toggle {
+        font-size: 18px;
+        margin-top: 10px;
+      }
+
+      #welcome-box {
+        font-size: 22px;
+        padding: 26px;
+      }
+    }
+  </style>
+
+  <script>
+    let lastAns = "";
+    let isRadMode = false;
+
+    window.onload = function () {
+      setTimeout(() => {
+        const welcome = document.getElementById("welcome-box");
+        if (welcome) welcome.style.display = "none";
+      }, 10000); // 10 seconds
+    };
+
+    function toggleMode() {
+      isRadMode = document.getElementById("modeSwitch").checked;
+    }
+
+    function appendValue(val) {
+      const display = document.getElementById("display");
+      if (val === "Ans") {
+        display.value += lastAns;
+      } else {
+        display.value += val;
+      }
+    }
+
+    function clearDisplay() {
+      document.getElementById("display").value = "";
+      document.getElementById("history").innerText = "";
+    }
+
+    function deleteChar() {
+      const display = document.getElementById("display");
+      display.value = display.value.slice(0, -1);
+    }
+
+    function toFraction(decimal) {
+      const tolerance = 1.0E-6;
+      let h1 = 1, h2 = 0, k1 = 0, k2 = 1, b = decimal;
+      do {
+        let a = Math.floor(b);
+        let aux = h1; h1 = a * h1 + h2; h2 = aux;
+        aux = k1; k1 = a * k1 + k2; k2 = aux;
+        b = 1 / (b - a);
+      } while (Math.abs(decimal - h1 / k1) > decimal * tolerance);
+      return `${h1}/${k1}`;
+    }
+
+    function calculate() {
+      let input = document.getElementById("display").value;
+
+      try {
+        document.getElementById("history").innerText = input;
+        input = input.replace(/π/g, "Math.PI");
+        input = input.replace(/e/g, "Math.E");
+
+        input = input.replace(/sin\(([^)]+)\)/g, (_, val) => isRadMode ? `Math.sin(${val})` : `Math.sin((${val} * Math.PI / 180))`);
+        input = input.replace(/cos\(([^)]+)\)/g, (_, val) => isRadMode ? `Math.cos(${val})` : `Math.cos((${val} * Math.PI / 180))`);
+        input = input.replace(/tan\(([^)]+)\)/g, (_, val) => isRadMode ? `Math.tan(${val})` : `Math.tan((${val} * Math.PI / 180))`);
+
+        input = input.replace(/log\(/g, "Math.log10(");
+        input = input.replace(/ln\(/g, "Math.log(");
+        input = input.replace(/√\(/g, "Math.sqrt(");
+        input = input.replace(/\^/g, "**");
+
+        let result = eval(input);
+        result = Math.round(result * 1e10) / 1e10;
+        let fraction = toFraction(result);
+
+        document.getElementById("display").value = `Ans: ${result} (${fraction})`;
+        lastAns = result;
+      } catch (e) {
+        document.getElementById("display").value = "Error";
+      }
+    }
+
+    document.addEventListener("keydown", function (e) {
+      const key = e.key;
+      if (!isNaN(key) || "+-*/().".includes(key)) {
+        appendValue(key);
+      } else if (key === "Enter") {
+        calculate();
+      } else if (key === "Backspace") {
+        deleteChar();
+      } else if (key.toLowerCase() === "a") {
+        appendValue("Ans");
+      }
+    });
+  </script>
+
+</body>
+</html>
